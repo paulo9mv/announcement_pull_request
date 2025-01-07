@@ -16,13 +16,12 @@ runs:
     - name: Add a comment to open PRs
       run: |
         # Fetch the current repository details from GitHub context
-        OWNER="${{ github.repository_owner }}"
-        REPO="${{ github.repository }}"
+        OWNER_REPO="${{ github.repository }}"
         MESSAGE="${{ inputs.message }}"
         TOKEN="${{ inputs.token }}"
 
         PRS=$(curl -s -H "Authorization: Bearer $TOKEN" \
-          "https://api.github.com/repos/$OWNER/$REPO/issues")
+          "https://api.github.com/repos/$OWNER_REPO/issues")
 
         # Debug: Print the response to see the structure
         echo "Response from GitHub API:"
