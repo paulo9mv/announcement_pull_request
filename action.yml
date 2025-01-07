@@ -11,5 +11,5 @@ runs:
   using: "composite"
   steps:
     - name: Run the announcement script
-      run: ./script.sh "${{ inputs.message }}" "${{ secrets.GITHUB_TOKEN }}"
+      run: ./script.sh "${{ inputs.message }}" "${{ inputs.token }}"
       shell: bash
