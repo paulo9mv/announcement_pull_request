@@ -36,7 +36,7 @@ runs:
             echo "Adding comment to PR #$PR"
             curl -s -X POST -H "Authorization: token $TOKEN" \
               -d "{\"body\":\"$MESSAGE\"}" \
-              "https://api.github.com/repos/$OWNER/$REPO/issues/$PR/comments"
+              "https://api.github.com/repos/$OWNER_REPO/issues/$PR/comments"
           done
         else
           echo "No open PRs found."
