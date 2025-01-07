@@ -15,6 +15,7 @@ runs:
 
     - name: Set execute permission for the script
       run: chmod +x ./script.sh
+      shell: bash
 
     - name: Run the announcement script
       run: ./script.sh "${{ inputs.message }}" "${{ inputs.token }}"
