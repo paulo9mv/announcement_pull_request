@@ -1,73 +1,83 @@
-# Hello, World! JavaScript Action
+# Announcement Pull Request GitHub Action
 
-[![GitHub Super-Linter](https://github.com/actions/hello-world-javascript-action/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
-![CI](https://github.com/actions/hello-world-javascript-action/actions/workflows/ci.yml/badge.svg)
+A GitHub Action to add a comment to all open Pull Requests in a repository.
 
-This action prints `Hello, World!` or `Hello, <who-to-greet>!` to the log. To
-learn how this action was built, see
-[Creating a JavaScript action](https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action).
+## Description
 
-## Create Your Own Action
+This action adds a custom comment to all open Pull Requests (PRs) in a repository. It is useful, for example, to notify developers about updates or important events directly in PRs.
 
-To create your own action, you can use this repository as a template! Just
-follow the below instructions:
+## How to Use
 
-1. Click the **Use this template** button at the top of the repository
-1. Select **Create a new repository**
-1. Select an owner and name for your new repository
-1. Click **Create repository**
-1. Clone your new repository
-
-> [!CAUTION]
->
-> Make sure to remove or update the [`CODEOWNERS`](./CODEOWNERS) file! For
-> details on how to use this file, see
-> [About code owners](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners).
-
-## Usage
-
-Here's an example of how to use this action in a workflow file:
+To use this action in your repository, add the following to your `.github/workflows/<your-workflow>.yml` file:
 
 ```yaml
-name: Example Workflow
+name: Add PR Comment
 
 on:
-  workflow_dispatch:
-    inputs:
-      who-to-greet:
-        description: Who to greet in the log
-        required: true
-        default: 'World'
-        type: string
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
-  say-hello:
-    name: Say Hello
+  add-pr-comment:
     runs-on: ubuntu-latest
 
     steps:
-      # Change @main to a specific commit SHA or version tag, e.g.:
-      # actions/hello-world-javascript-action@e76147da8e5c81eaf017dede5645551d4b94427b
-      # actions/hello-world-javascript-action@v1.2.3
-      - name: Print to Log
-        id: print-to-log
-        uses: actions/hello-world-javascript-action@main
+      - name: Add comment to PR
+        uses: paulo9mv/announcement_pull_request@v0.4.3
         with:
-          who-to-greet: ${{ inputs.who-to-greet }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          message: "Hey everyone, code review is always welcome!"
 ```
 
-For example workflow runs, check out the
-[Actions tab](https://github.com/actions/hello-world-javascript-action/actions)!
-:rocket:
+### Input Parameters
+token (required): The GitHub token to authenticate the action. Use ${{ secrets.GITHUB_TOKEN }} to allow the action to interact with the repository.
+message (required): The message that will be posted on the PRs.
 
-## Inputs
+### Permissions
+The GITHUB_TOKEN has limited permissions by default, and you may need to configure them to ensure the action can add comments to PRs.
 
-| Input          | Default | Description                     |
-| -------------- | ------- | ------------------------------- |
-| `who-to-greet` | `World` | The name of the person to greet |
+If you are using the action in your repository and the action cannot add comments, add the following to your workflow.yml file, inside the job that uses the action:
 
-## Outputs
+```yaml
+permissions:
+  issues: write      # Permission to add and modify comments on issues and PRs
+  pull-requests: write  # Permission to add comments on pull requests
+```
+These permissions will ensure that the action has access to interact with PRs.
 
-| Output | Description             |
-| ------ | ----------------------- |
-| `time` | The time we greeted you |
+### Example Workflow
+Here’s a complete example of a workflow that adds a comment to all PRs when there’s a new update:
+
+```yaml
+name: Add Comment to PRs
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  add-pr-comment:
+    runs-on: ubuntu-latest
+
+    permissions:
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Add comment to PR
+        uses: paulo9mv/announcement_pull_request@v0.4.3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          message: "Hey everyone, code review is always welcome!"
+```
+
+## Contributions 🤩
+If you have suggestions or improvements for this action, feel free to open a Pull Request or Issue.
+
+## License
+Distributed under the MIT License. See the LICENSE file for more details.
+
+## Made in 🇧🇷
