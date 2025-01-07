@@ -21,18 +21,18 @@ runs:
         MESSAGE="${{ inputs.message }}"
         TOKEN="${{ inputs.token }}"
 
-        PRS=$(curl -s -H "Authorization: token $TOKEN" \
+        PRS=$(curl -s -H "Authorization: Bearer $TOKEN" \
           "https://api.github.com/repos/$OWNER/$REPO/issues")
 
         PR_COUNT=$(echo "$PRS" | jq length)
         if [ "$PR_COUNT" -gt 0 ]; then
-          # Loop over each PR and add the comment
+          # Loop through each issue and check if it has the 'pull_request' key
           for PR in $(echo "$PRS" | jq -r '.[] | select(.pull_request != null) | .number'); do
             echo "Adding comment to PR #$PR"
             curl -s -X POST -H "Authorization: token $TOKEN" \
               -d "{\"body\":\"$MESSAGE\"}" \
               "https://api.github.com/repos/$OWNER/$REPO/issues/$PR/comments"
-          done  
+          done
         else
           echo "No open PRs found."
         fi
