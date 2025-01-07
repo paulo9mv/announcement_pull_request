@@ -1,9 +1,0 @@
-# Ignorar arquivos do PnP
-.pnp.cjs
-.pnp.loader.mjs
-
-# Ignorar a pasta de dependências "unplugged"
-.yarn/unplugged/
-
-# Ignorar o diretório node_modules
-node_modules/

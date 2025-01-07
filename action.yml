@@ -8,5 +8,8 @@ inputs:
     description: "GitHub Token with repository access"
     required: true
 runs:
-  using: "node20"
-  main: "dist/index.js"
+  using: "composite"
+  steps:
+    - name: Run the announcement script
+      run: ./script.sh "${{ inputs.message }}" "${{ secrets.GITHUB_TOKEN }}"
+      shell: bash
