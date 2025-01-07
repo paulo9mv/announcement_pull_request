@@ -1,5 +1,6 @@
 name: "Announcement Pull Request"
 description: "Automatically creates a comment on all open PRs"
+icon: alert-circle
 inputs:
   message:
     description: "Custom comment to add to all open PRs"
