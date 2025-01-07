@@ -1,19 +1,12 @@
-name: Announcement Pull Request
-description: Greet someone and record the time
-author: GitHub Actions
-
-# Define your inputs here.
+name: "Announcement Pull Request"
+description: "A GitHub Action to add a comment on all open PRs"
 inputs:
-  who-to-greet:
-    description: Who to greet
+  message:
+    description: "Custom comment to add to all open PRs"
     required: true
-    default: World
-
-# Define your outputs here.
-outputs:
-  time:
-    description: The time we greeted you
-
+  token:
+    description: "GitHub Token with repository access"
+    required: true
 runs:
-  using: node20
-  main: dist/index.js
+  using: "node20"
+  main: "src/index.ts"
