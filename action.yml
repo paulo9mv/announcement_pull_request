@@ -29,7 +29,7 @@ runs:
           # Loop over each PR and add the comment
           for PR in $(echo "$PRS" | jq -r '.[].number'); do
             echo "Adding comment to PR #$PR"
-            curl -s -X POST -H "Authorization: token $TOKEN" \
+            curl -s -X POST -H "Authorization: Bearer $TOKEN" \
               -d "{\"body\":\"$MESSAGE\"}" \
               "https://api.github.com/repos/$OWNER/$REPO/issues/$PR/comments"
           done
