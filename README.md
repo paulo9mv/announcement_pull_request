@@ -2,6 +2,9 @@
 
 A GitHub Action to add a comment to all open Pull Requests in a repository.
 
+![image](https://github.com/user-attachments/assets/b2a67501-8e71-4b34-b8cd-d96187bd4d03)
+
+
 ## Description
 
 This action adds a custom comment to all open Pull Requests (PRs) in a repository. It is useful, for example, to notify developers about updates or important events directly in PRs.
@@ -73,6 +76,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           message: "Hey everyone, code review is always welcome!"
 ```
+
 
 ## Contributions 🤩
 If you have suggestions or improvements for this action, feel free to open a Pull Request or Issue.
