@@ -5,7 +5,12 @@ async function run() {
   try {
     // Obter os inputs
     const message = core.getInput("message");
-    const token = process.env.GITHUB_TOKEN || ""; // Token da ação
+    const token = core.getInput("token") || process.env.GITHUB_TOKEN;
+
+    if (!token) {
+      core.setFailed("GITHUB_TOKEN is required.");
+      return;
+    }
 
     // Criar o cliente GitHub
     const octokit = github.getOctokit(token);
