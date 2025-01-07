@@ -1,4 +1,4 @@
-# Announcement Pull Request GitHub Action
+# Announcement Pull Request GitHub Action 📢
 
 A GitHub Action to add a comment to all open Pull Requests in a repository.
 
